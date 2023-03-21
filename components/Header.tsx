@@ -58,11 +58,9 @@ const Header = () => {
             fgColor="gray"
             bgColor="transparent"
           />
-          <Link href="#contacts">
-            <p className="uppercase hidden md:inline-flex text-sm text-gray-400">
-              get in touch
-            </p>
-          </Link>
+          <p className="uppercase hidden md:inline-flex text-sm text-gray-400">
+            get in touch
+          </p>
         </motion.div>
       </header>
     </>

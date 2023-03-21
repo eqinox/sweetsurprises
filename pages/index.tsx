@@ -7,6 +7,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import ContactMe from "@/components/ContactMe";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -53,11 +54,18 @@ export default function Home() {
       <Link href="#hero">
         <footer className="sticky bottom-5 w-full cursor-pointer">
           <div className="flex items-center justify-center ">
-            <img
+            <Image
+              src={"https://sungate.md/wp-content/uploads/2022/07/sungate_moldova.jpeg"}
+              alt="neshto"
+              width={40}
+              height={40}
+              className="rounded-full filter grayscale hover:grayscale-0 cursor-pointer"
+            />
+            {/* <img
               src="https://sungate.md/wp-content/uploads/2022/07/sungate_moldova.jpeg"
               alt="neshto"
               className="h-10 w-10 rounded-full filter grayscale hover:grayscale-0 cursor-pointer"
-            />
+            /> */}
           </div>
         </footer>
       </Link>

@@ -4,7 +4,7 @@ import {
   EnvelopeIcon,
   MapIcon,
 } from "@heroicons/react/24/solid";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 
 type Inputs = {
   name: string;
@@ -14,8 +14,8 @@ type Inputs = {
 };
 
 const ContactMe = () => {
-  const { register, handleSubmit } = useForm();
-  const onSubmit: SubmitHandler<Inputs> = (formData) => {
+  const { register, handleSubmit } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<FieldValues> = (formData) => {
     console.log('asd', formData)
     window.location.href = `mailto:eqinox@abv.bg?subject=${formData.subject}&body=HI, my name is ${formData.name}. ${formData.message} (${formData.email})`;
   };
