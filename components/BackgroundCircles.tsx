@@ -15,7 +15,7 @@ const BackgroundCircles = () => {
       transition={{
         duration: 2.5
       }}
-      className="relative flex justify-center items-center"
+      className="relative flex justify-center items-center "
     >
       
       <div
