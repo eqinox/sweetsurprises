@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Slider from "../components/Slider";
 import img from "../public/solarium.jpg";
+import Map from "@/components/Map";
 
 export default function Home() {
   return (
@@ -28,19 +29,19 @@ export default function Home() {
       </section>
 
       {/* Hero */}
-      <section id="hero" className="snap-center">
+      {/* <section id="hero" className="snap-center">
         <Hero />
-      </section>
+      </section> */}
 
       {/* About */}
-      <section id="about" className="snap-center">
+      {/* <section id="about" className="snap-center">
         <About />
-      </section>
+      </section> */}
 
       {/* Experience */}
-      <section id="experience" className="snap-center">
+      {/* <section id="experience" className="snap-center">
         <WorkExperience />
-      </section>
+      </section> */}
 
       {/* Skills */}
       {/* <section id="skills" className="snap-start">
@@ -57,7 +58,11 @@ export default function Home() {
         <ContactMe />
       </section>
 
-      <Link href="#hero">
+      <section id="map" className="snap-start">
+        <Map />
+      </section>
+
+      {/* <Link href="#hero">
         <footer className="sticky bottom-5 w-full cursor-pointer">
           <div className="flex items-center justify-center ">
             <Image
@@ -69,7 +74,7 @@ export default function Home() {
             />
           </div>
         </footer>
-      </Link>
+      </Link> */}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import {
   EnvelopeIcon,
   MapIcon,
 } from "@heroicons/react/24/solid";
+import { useState } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 
 type Inputs = {
@@ -15,8 +16,20 @@ type Inputs = {
 
 const ContactMe = () => {
   const { register, handleSubmit } = useForm<Inputs>();
+  const [isMapVisible, setIsMapVisible] = useState(false)
   const onSubmit: SubmitHandler<FieldValues> = (formData) => {
     window.location.href = `mailto:eqinox@abv.bg?subject=${formData.subject}&body=HI, my name is ${formData.name}. ${formData.message} (${formData.email})`;
+  };
+
+  const handleMapClick = () => {
+    setIsMapVisible(!isMapVisible);
+  };
+
+  const openGoogleMaps = () => {
+    window.open(
+      "https://www.google.com/maps?q=42.673816901896984,23.26378880375552",
+      "_blank"
+    );
   };
 
   return (
@@ -26,10 +39,10 @@ const ContactMe = () => {
       </h3>
 
       <div className="flex flex-col space-y-10">
-        <h4 className="text-4-xl font-semibold text-center">
+        {/* <h4 className="text-4-xl font-semibold text-center">
           Имам каквото ти е нужно{" "}
           <span className="decoration-[#F7AB0A]/50 underline"> нека говорим.</span>
-        </h4>
+        </h4> */}
 
         <div className="space-y-10">
           <div className="flex items-center space-x-5">
@@ -39,12 +52,12 @@ const ContactMe = () => {
 
           <div className="flex items-center space-x-5">
             <EnvelopeIcon className="text-[#F7aB0A] h-7 w-7 animate-pulse" />
-            <p className="text-2xl">papareact.team@gmail.com</p>
+            <p className="text-2xl">sweet-surprises@gmail.com</p>
           </div>
 
-          {/* <div className="flex items-center space-x-5">
-            <MapIcon className="text-[#F7aB0A] h-7 w-7 animate-pulse" />
-            <p className="text-2xl">123 Developer Lane</p>
+          {/* <div className="flex items-center space-x-5" onClick={openGoogleMaps}>
+            <MapIcon className="text-[#F7aB0A] h-7 w-7 animate-pulse cursor-pointer" />
+            <p className="text-2xl">Click to open Google Maps</p>
           </div> */}
         </div>
 
@@ -77,6 +90,7 @@ const ContactMe = () => {
             Submit
           </button>
         </form>
+
       </div>
     </div>
   );

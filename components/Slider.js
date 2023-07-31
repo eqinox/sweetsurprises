@@ -97,11 +97,36 @@ const Slider = () => {
     setimageCounter(index);
   };
 
+   // Touch Swipe Handling
+   let touchStartX = 0;
+   let touchEndX = 0;
+   const MIN_SWIPE_DISTANCE = 50;
+ 
+   const handleTouchStart = (e) => {
+     touchStartX = e.touches[0].clientX;
+   };
+ 
+   const handleTouchMove = (e) => {
+     touchEndX = e.touches[0].clientX;
+   };
+ 
+   const handleTouchEnd = () => {
+     const swipeDistance = touchEndX - touchStartX;
+     if (swipeDistance >= MIN_SWIPE_DISTANCE) {
+       slideLeft();
+     } else if (swipeDistance <= -MIN_SWIPE_DISTANCE) {
+       slideRight();
+     }
+   };
+
   return (
     <>
       <div
         className="h-[780px] flex flex-col space-y-8 overflow-hidden text-center justify-center 
       items-center max-w-[1400px] w-full m-auto px-4 relative group"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       > 
 
       <ImageSlider images={images} imageCounter={imageCounter} increment={increment}/> 
