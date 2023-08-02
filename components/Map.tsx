@@ -23,18 +23,22 @@ const Map = () => {
                 Контакти
             </h3>
 
-            <div className="flex flex-col space-y-10">  <div>
-                <iframe
-                    title="Google Maps"
-                    width="600"
-                    height="450"
-                    style={{ border: 0 }}
-                    loading="lazy"
-                    allowFullScreen
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2985.852104932205!2d23.26378880375552!3d42.673816901896984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM0zCjs0zMi42IkUxwrAxOC8wMyAyM8KwMjEnMzUuMCJF!5e0!3m2!1sen!2sbg!4v1625158248208!5m2!1sen!2sbg"
-                ></iframe>
-            </div>
-
+            <div className="flex flex-col space-y-10">
+                <div>
+                    <iframe
+                        title="Google Maps"
+                        width="600"
+                        height="450"
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        allowFullScreen
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2985.852104932205!2d23.26378880375552!3d42.673816901896984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM0zCjs0zMi42IkUxwrAxOC8wMyAyM8KwMjEnMzUuMCJF!5e0!3m2!1sen!2sbg!4v1625158248208!5m2!1sen!2sbg"
+                    ></iframe>
+                    <button
+                        className="absolute top-0 left-0 w-full h-full cursor-pointer"
+                        onClick={openGoogleMaps}
+                    />
+                </div>
             </div>
         </div>
     );
