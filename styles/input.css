@@ -22,6 +22,12 @@
         width: 100%;
         margin-left: 0px !important;
       }
+
+      .title2 {
+        font-size: 25px !important;
+        font-weight: bold;
+        margin-left: 35px;
+      }
     }
   }
 }

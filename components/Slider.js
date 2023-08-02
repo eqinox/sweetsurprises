@@ -135,7 +135,7 @@ const Slider = () => {
           Соларно Студио
         </div>
         <div className="absolute top-48 tracking-[40px] text-5xl text-yellow-500 z-30">
-          Sweet Surprises
+          <span className="title1">Sweet</span> <span className="title2">Surprises</span>
         </div>
 
         <div
