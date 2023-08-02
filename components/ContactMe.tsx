@@ -34,17 +34,18 @@ const ContactMe = () => {
 
   return (
     <div className="h-screen flex relative flex-col text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center ">
+
       <h3 className="absolute top-24 uppercase tracking-[20px] text-yellow-500 text-2xl ">
         Контакти
       </h3>
 
-      <div className="flex flex-col space-y-10">
+      <div className="flex flex-col space-y-10 ">
         {/* <h4 className="text-4-xl font-semibold text-center">
           Имам каквото ти е нужно{" "}
           <span className="decoration-[#F7AB0A]/50 underline"> нека говорим.</span>
         </h4> */}
 
-        <div className="space-y-10">
+        <div className="space-y-10 ">
           <div className="flex items-center space-x-5">
             <PhoneIcon className="text-[#F7aB0A] h-7 w-7 animate-pulse" />
             <p className="text-2xl">+123456789</p>
@@ -65,29 +66,29 @@ const ContactMe = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col space-y-2 w-fill mx-auto"
         >
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 etoq">
             <input
               {...register("name")}
               placeholder="Име"
-              className="contactInput"
+              className="contactInput text-white placeholder-yellow-500 focus:text-white"
               type="text"
             />
             <input
               {...register("email")}
               placeholder="Email"
-              className="contactInput"
+              className="contactInput text-white placeholder-yellow-500 focus:text-white"
               type="email"
             />
           </div>
           <input
             {...register("subject")}
             placeholder="Тема"
-            className="contactInput"
+            className="contactInput text-white placeholder-yellow-500 focus:text-white"
             type="text"
           />
           <textarea {...register("message")} className="contactInput" />
           <button className="bg-[#F7AB0A] py-5 px-10 rounded-md text-black font-bold">
-            Submit
+            Изпрати
           </button>
         </form>
 
