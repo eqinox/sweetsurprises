@@ -1,0 +1,48 @@
+.header {
+  display: flex;
+  align-items: center;
+  /* width: 100%; */
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 20px;
+  background-color: inherit;
+  color: #fff;
+  font-size: 18px;
+}
+
+.navbar {
+  flex-grow: 2;
+}
+
+.logo {
+  display: flex;
+  flex-grow: 1;
+  position: relative;
+  left: 4rem;
+}
+
+.icons {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+  position: relative;
+  right: 4rem;
+}
+
+.menu-icon {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .menu-icon {
+    display: inline;
+  }
+
+  .icons {
+    right: 1rem;
+  }
+
+  .logo {
+    left: 1rem;
+  }
+}
