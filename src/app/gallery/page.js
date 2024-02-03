@@ -16,7 +16,7 @@ const Gallery = () => {
 
     useEffect(() => {
         dispatch(getAllImages());
-    }, []);
+    }, [dispatch]);
 
     const handleOpeningModal = (href) => {
         setImageForOpening(href);

@@ -33,4 +33,6 @@ const Modal = forwardRef(({ href, resetImage }, ref) => {
     </dialog>;
 });
 
+Modal.displayName = 'Modal';
+
 export default Modal;
