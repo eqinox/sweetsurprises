@@ -12,7 +12,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-   /* height: 100vh; /* This will take the full height of the viewport. Adjust as needed. */
 }
 
 .ul {
@@ -43,23 +42,6 @@
     opacity: 0.5;
 }
 
-/* .li:nth-child(1) {
-    transform: rotate(10deg);
-}
-
-.li:nth-child(2) {
-    transform: rotate(0deg);
-}
-
-.li:nth-child(3) {
-    transform: rotate(-10deg);
-}
-
-.li:nth-child(4) {
-    transform: rotate(20deg);
-} */
-
-
 .li:nth-child(4n+1) {
     transform: rotate(10deg);
 }
@@ -78,17 +60,4 @@
 
 .p {
     margin: -15px 0 0 0;
-}
-
-.light {
-    border-radius: 50%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 700px;
-    height: 700px;
-    background: #fff;
-    filter: blur(100px);
-    opacity: 0.3;
-    pointer-events: none;
 }

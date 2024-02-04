@@ -46,7 +46,6 @@ const Gallery = () => {
                         <p className={styles.p}>image #1</p>
                     </li>)}
             </ul>
-            <div className={styles.light}></div>
         </div>
     </div>;
 };
