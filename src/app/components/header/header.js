@@ -1,8 +1,11 @@
 "use client"
 import { useEffect, useState } from 'react';
+import { IoMdMenu } from "react-icons/io";
 import Navbar from "./navbar";
 import styles from "./header.module.css";
 import Image from 'next/image';
+import LowResolutionNavbar from './lowResolutionNavbar';
+import Button from '../UI/button';
 
 const Header = () => {
     const logoId = 1;
@@ -11,6 +14,7 @@ const Header = () => {
 
     const [logo, setLogo] = useState('');
     const [headerImage, setHeaderImage] = useState('');
+    const [showDropdown, setShowDropdown] = useState(true);
 
     useEffect(() => {
         const fetchHeaderData = async () => {
@@ -32,6 +36,14 @@ const Header = () => {
         fetchHeaderData();
     }, []);
 
+    const toggleMenuDropdown = (value) => {
+        if (value === false) {
+            setShowDropdown(value);
+        } else {
+            setShowDropdown(!showDropdown);
+        }
+    };
+
     return (
         <header
             style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_DB_HOST}${headerImage})` }}
@@ -50,6 +62,18 @@ const Header = () => {
                 className={styles.navbar}
                 headingItems={headingItems}
             />
+            <LowResolutionNavbar
+                showDropdown={showDropdown}
+                toggleMenuDropdown={toggleMenuDropdown}
+                headingItems={headingItems}
+            />
+
+            <Button
+                onClick={() => toggleMenuDropdown()}
+                className={styles["menu-icon"]}
+            >
+                <IoMdMenu size={45} />
+            </Button>
         </header>
     );
 };

@@ -1,0 +1,20 @@
+.button {
+  padding: 15px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+}
+
+.withoutBorder {
+  border-color: transparent;
+}
+
+.withBorder {
+  border-color: steelblue;
+}
+
+.button:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
