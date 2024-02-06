@@ -6,7 +6,6 @@ import Link from 'next/link'
 const LowResolutionNavbar = ({ className, headingItems, showDropdown, toggleMenuDropdown }) => {
     const pathname = usePathname()
     const url = pathname.replace('/', '')
-console.log('showDropdown', showDropdown);
     return (
         <div>
             <div

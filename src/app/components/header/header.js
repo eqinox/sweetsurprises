@@ -14,7 +14,7 @@ const Header = () => {
 
     const [logo, setLogo] = useState('');
     const [headerImage, setHeaderImage] = useState('');
-    const [showDropdown, setShowDropdown] = useState(true);
+    const [showDropdown, setShowDropdown] = useState(false);
 
     useEffect(() => {
         const fetchHeaderData = async () => {
