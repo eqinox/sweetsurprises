@@ -13,6 +13,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <div>test: ${backgroundImageUrl}</div>
       <body
         style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
       >
