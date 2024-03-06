@@ -3,17 +3,23 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                protocol: 'http', // Use 'http' for 127.0.0.1
+                protocol: 'http',
                 hostname: '127.0.0.1',
-                port: '1337', // You can specify a port if needed
+                port: '1337',
                 // pathname can be used to specify a path pattern, if needed
             },
-            // Adding entry for sweetsurprises-f3cd9971ba40.herokuapp.com
             {
-                protocol: 'https', // Use 'https' for secure requests
+                protocol: 'https',
                 hostname: 'sweetsurprises-f3cd9971ba40.herokuapp.com',
                 // No need to specify port for standard https (443) requests
                 // pathname can be used here as well, if needed
+            },
+            // Add your S3 bucket here
+            {
+                protocol: 'https',
+                hostname: 'sweetsurprises-bucket.s3.eu-north-1.amazonaws.com',
+                // No port needed for standard https requests
+                // You can add pathname if you want to limit to specific paths
             },
             // ... other patterns
         ],
