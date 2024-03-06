@@ -21,7 +21,7 @@ const Gallery = () => {
 
     useEffect(() => {
         if (!isEmpty(allImages) && allImages.data.length > 0) {
-            const imagesLinks = allImages.data.map((item) => process.env.NEXT_PUBLIC_DB_HOST + item.attributes.image.data.attributes.url);
+            const imagesLinks = allImages.data.map((item) => item.attributes.image.data.attributes.url);
             setAllImagesLinks(imagesLinks);
         }
 

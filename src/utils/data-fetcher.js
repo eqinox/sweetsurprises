@@ -5,7 +5,7 @@ export const getBackgroundImageUrl = async () => {
         const backgroundResponse = await fetch(`${process.env.NEXT_PUBLIC_DB_HOST}/api/backgrounds/${backgroundImageId}?populate=*`);
 
         const backgroundData = await backgroundResponse.json();
-        const imageUrl = process.env.NEXT_PUBLIC_DB_HOST + backgroundData.data.attributes.image.data.attributes.url;
+        const imageUrl = backgroundData.data.attributes.image.data.attributes.url;
         
         return imageUrl;
 
