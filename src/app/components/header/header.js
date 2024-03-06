@@ -26,7 +26,7 @@ const Header = () => {
 
                 const logoResponse = await fetch(`${process.env.NEXT_PUBLIC_DB_HOST}/api/logos/${logoId}?populate=*`);
                 const logoData = await logoResponse.json();
-                const logoPath = process.env.NEXT_PUBLIC_DB_HOST + logoData.data.attributes.image.data.attributes.formats.thumbnail.url;
+                const logoPath = logoData.data.attributes.image.data.attributes.formats.thumbnail.url;
                 setLogo(logoPath);
             } catch (error) {
                 console.log(error);
@@ -46,7 +46,7 @@ const Header = () => {
 
     return (
         <header
-            style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_DB_HOST}${headerImage})` }}
+            style={{ backgroundImage: `url(${headerImage})` }}
             className={styles.header}
         >
             <div className={`${styles.logo}`}>

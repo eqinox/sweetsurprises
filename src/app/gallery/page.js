@@ -67,11 +67,10 @@ const Gallery = () => {
                     <li
                         key={item.id}
                         className={styles.li}
-                        onClick={() => handleOpeningModal(process.env.NEXT_PUBLIC_DB_HOST + item.attributes.image.data.attributes.url)}
+                        onClick={() => handleOpeningModal(item.attributes.image.data.attributes.url)}
                     >
                         <Image
                             src={item.attributes.image.data.attributes.url}
-                            // src={process.env.NEXT_PUBLIC_DB_HOST + item.attributes.image.data.attributes.url}
                             alt='test'
                             width={200}
                             height={200}
