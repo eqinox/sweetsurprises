@@ -90,6 +90,13 @@ body {
   background: #051715;
 }
 
+.mainWrapper {
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* Header content footer */
+  min-height: 100vh;
+  /* Ensure the body or wrapper fills at least the full height of the viewport */
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

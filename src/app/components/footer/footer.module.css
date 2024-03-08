@@ -1,0 +1,13 @@
+.footerSection {
+    /* flex: 1; */
+    /* margin-left: 2rem; */
+    /* justify-content: center; */
+    /* text-align: left; */
+    /*padding-left: 100px; /* Apply padding for non-mobile screens */
+}
+/* Media query for screens smaller than 600px */
+@media (max-width: 600px) {
+    .footerSection {
+        padding-left: 0px; /* Remove padding for mobile screens */
+    }
+}

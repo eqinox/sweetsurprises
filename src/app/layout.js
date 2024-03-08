@@ -1,7 +1,10 @@
-import Header from "@/app/components/header/header";
+
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
 import { getBackgroundImageUrl } from "@/utils/data-fetcher";
+import { imageUrlBase } from "@/utils/helper";   
+import Footer from "./components/footer/footer";
+import Header from "./components/header/header";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,17 +14,32 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   const backgroundImageUrl = await getBackgroundImageUrl();
 
+
   return (
     <html lang="en">
       <body
-        style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
+        style={{
+          backgroundImage: `url(${imageUrlBase}${backgroundImageUrl})`,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          color: 'whitesmoke',
+          fontSize: '1.5rem'
+          // display: 'grid',
+          // gridTemplateRows: '1fr auto',
+        }}
       >
         <StoreProvider>
           <Header />
-          {children}
+          <main style={{ flexGrow: 1 }}>
+            {children}
+          </main>
+
+
+          <Footer />
         </StoreProvider>
       </body>
-    </html>
+    </html >
   );
 }
 

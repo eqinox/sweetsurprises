@@ -6,6 +6,7 @@ import styles from "./header.module.css";
 import Image from 'next/image';
 import LowResolutionNavbar from './lowResolutionNavbar';
 import Button from '../UI/button';
+import { imageUrlBase } from '@/utils/helper';
 
 const Header = () => {
     const logoId = 1;
@@ -21,12 +22,12 @@ const Header = () => {
             try {
                 const headerResponse = await fetch(`${process.env.NEXT_PUBLIC_DB_HOST}/api/headers/${headerId}?populate=*`);
                 const headerData = await headerResponse.json();
-                const imageUrl = headerData.data.attributes.image.data.attributes.formats.medium.url;
+                const imageUrl = imageUrlBase + headerData.data.attributes.image.data.attributes.formats.medium.url;
                 setHeaderImage(imageUrl);
 
                 const logoResponse = await fetch(`${process.env.NEXT_PUBLIC_DB_HOST}/api/logos/${logoId}?populate=*`);
                 const logoData = await logoResponse.json();
-                const logoPath = logoData.data.attributes.image.data.attributes.formats.thumbnail.url;
+                const logoPath = imageUrlBase + logoData.data.attributes.image.data.attributes.formats.thumbnail.url;
                 setLogo(logoPath);
             } catch (error) {
                 console.log(error);

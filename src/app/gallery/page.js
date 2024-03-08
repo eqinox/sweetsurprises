@@ -1,11 +1,13 @@
 "use client"
 import Image from 'next/legacy/image';
-import styles from './gallery.module.css';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllImages } from '@/lib/actions/gallery.actions';
 import { isEmpty } from 'lodash';
+
+import styles from './gallery.module.css';
+import { getAllImages } from '@/lib/actions/gallery.actions';
 import Modal from '@/app/components/modal';
+import { imageUrlBase } from '@/utils/helper';
 
 const Gallery = () => {
     const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const Gallery = () => {
 
     useEffect(() => {
         if (!isEmpty(allImages) && allImages.data.length > 0) {
-            const imagesLinks = allImages.data.map((item) => item.attributes.image.data.attributes.url);
+            const imagesLinks = allImages.data.map((item) => imageUrlBase + item.attributes.image.data.attributes.url);
             setAllImagesLinks(imagesLinks);
         }
 
@@ -67,10 +69,10 @@ const Gallery = () => {
                     <li
                         key={item.id}
                         className={styles.li}
-                        onClick={() => handleOpeningModal(item.attributes.image.data.attributes.url)}
+                        onClick={() => handleOpeningModal(imageUrlBase + item.attributes.image.data.attributes.url)}
                     >
                         <Image
-                            src={item.attributes.image.data.attributes.url}
+                            src={imageUrlBase + item.attributes.image.data.attributes.url}
                             alt='test'
                             width={200}
                             height={200}
