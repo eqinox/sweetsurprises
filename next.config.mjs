@@ -23,15 +23,6 @@ const nextConfig = {
             },
             // ... other patterns
         ],
-    },
-    async redirects() {
-        return [
-            {
-                source: '/',
-                destination: '/home',
-                permanent: true, // Set to false if the redirect should be temporary
-            },
-        ];
     }
 };
 

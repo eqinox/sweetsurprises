@@ -5,7 +5,8 @@ import Link from 'next/link'
 
 const LowResolutionNavbar = ({ className, headingItems, showDropdown, toggleMenuDropdown }) => {
     const pathname = usePathname()
-    const url = pathname.replace('/', '')
+    const url = pathname.replace(/\/(.+)/, '$1');
+    
     return (
         <div>
             <div
@@ -14,14 +15,14 @@ const LowResolutionNavbar = ({ className, headingItems, showDropdown, toggleMenu
             >
                 <nav className={styles.dropdownMenu + ` ${showDropdown === true ? styles.visible + ' ' + styles.zIndex20 : styles.hidden}`}>
                     <ul>
-                        {headingItems.map((item, index) => {
+                    {headingItems.map((item, index) => {
                             return (
                                 <li className={styles.li} key={index}>
                                     <Link
-                                        className={`${styles.navLink} ${item.toLowerCase() === url ? styles.selected : undefined}`}
-                                        href={item.toLowerCase()}
+                                        className={`${styles.navLink} ${item.route === url ? styles.selected : undefined}`}
+                                        href={item.route}
                                     >
-                                        {item}
+                                        {item.title}
                                     </Link>
                                 </li>
                             );

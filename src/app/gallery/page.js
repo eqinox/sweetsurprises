@@ -1,87 +1,132 @@
 "use client"
-import Image from 'next/legacy/image';
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { isEmpty } from 'lodash';
+import { useEffect, useRef, useState } from "react";
+import { IoCloseSharp } from "react-icons/io5";
+import ImageGallery from 'react-image-gallery';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import Image from 'next/image';
 
-import styles from './gallery.module.css';
-import { getAllImages } from '@/lib/actions/gallery.actions';
-import Modal from '@/app/components/modal';
-import { imageUrlBase } from '@/utils/helper';
+import { imageUrlBase } from "../../utils/helper";
+import axiosInstance from "../../utils/axios-instance";
+import styles from './page.module.css';
 
 const Gallery = () => {
-    const dispatch = useDispatch();
-    const allImages = useSelector((state) => state.gallery.all);
-    const dialog = useRef(null);
-
-    const [imageForOpening, setImageForOpening] = useState("");
-    const [allImagesLinks, setAllImagesLinks] = useState([]);
-
-    useEffect(() => {
-        dispatch(getAllImages());
-    }, [dispatch]);
+    const [images, setImages] = useState([]);
+    const [imagesInCollection, setImagesInCollection] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [viewCollection, setViewCollection] = useState(false);
+    const galleryRef = useRef(null);
 
     useEffect(() => {
-        if (!isEmpty(allImages) && allImages.data.length > 0) {
-            const imagesLinks = allImages.data.map((item) => imageUrlBase + item.attributes.image.data.attributes.url);
-            setAllImagesLinks(imagesLinks);
+        const fetchImages = async () => {
+            try {
+                const response = await axiosInstance.get(`/api/galleries?populate=*`);
+                setImages(response.data.data);
+
+            } catch (err) {
+                // Handle any errors that occur during the fetch                
+                setError(() => err);
+            } finally {
+                // Set loading to false once the fetch is complete
+                setLoading(false);
+            }
+        }
+        fetchImages();
+
+        const handleKeyDown = (event) => {
+            if (event.key === 'ArrowRight') {
+                galleryRef.current.slideToIndex(galleryRef.current.getCurrentIndex() + 1);
+            } else if (event.key === 'ArrowLeft') {
+                galleryRef.current.slideToIndex(galleryRef.current.getCurrentIndex() - 1);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [])
+
+    // Add event listener for 'Escape' key press
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                setViewCollection(false);
+            }
+        };
+
+        if (viewCollection) {
+            window.addEventListener('keydown', handleKeyDown);
         }
 
-    }, [allImages]);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [viewCollection]);
 
-    const handleOpeningModal = (href) => {
-        setImageForOpening(href);
-        if (href) {
-            dialog.current.showModal();
-        }
+    const openGalleryInSliderMode = (item) => {
+        const images = item.attributes.images.data.map((image) => image);
+        setViewCollection(true);
+        setImagesInCollection(images);
     }
 
-    const goToNextImage = (url) => {
-        const index = allImagesLinks.indexOf(url);
-        if (index + 1 === allImagesLinks.length) {
-            setImageForOpening(allImagesLinks[0]);
-        } else {
-            setImageForOpening(allImagesLinks[index + 1]);
-        }
+    if (loading) {
+        // Render loading state
+        return <div>Loading...</div>;
     }
 
-    const goToPrevImage = (url) => {
-        const index = allImagesLinks.indexOf(url);
-        if (index - 1 === -1) {
-            setImageForOpening(allImagesLinks[allImagesLinks.length - 1]);
-        } else {
-            setImageForOpening(allImagesLinks[index - 1]);
-        }
+    if (error) {
+        // Render error state
+        return <div>Error: {error.message}</div>;
     }
 
-    return <div className={styles.galleryContainer} >
-        <Modal
-            ref={dialog}
-            href={imageForOpening}
-            resetImage={setImageForOpening}
-            handleNextImage={goToNextImage}
-            handlePrevImage={goToPrevImage}
-        />
+    const images2 = imagesInCollection.map((image) => ({
+        original: imageUrlBase + image.attributes.url,
+        thumbnail: imageUrlBase + image.attributes.formats.thumbnail.url,
+    }));
 
-        <div className={styles.body}>
-            <ul className={styles.ul}>
-                {!isEmpty(allImages) && allImages.data.map((item) =>
-                    <li
-                        key={item.id}
-                        className={styles.li}
-                        onClick={() => handleOpeningModal(imageUrlBase + item.attributes.image.data.attributes.url)}
-                    >
-                        <Image
-                            src={imageUrlBase + item.attributes.image.data.attributes.url}
-                            alt='test'
-                            width={200}
-                            height={200}
-                            priority
-                        />
-                        <p className={styles.p}>image #1</p>
-                    </li>)}
-            </ul>
-        </div>
+    return <div style={{ width: '100%' }} >
+        {!viewCollection && <h1 style={{ textAlign: 'center' }}>Галерия</h1>}
+
+
+        {!viewCollection && images.length && images.map((collection) => <div
+            key={collection.id}
+            className={styles.gallery}
+            onClick={() => openGalleryInSliderMode(collection)}
+        >
+            <Image
+                alt={`${collection.attributes.title}`}
+                src={imageUrlBase + collection.attributes.displayImage.data.attributes.url}
+                height={240}
+                width={320}
+            />
+            <div className={styles.overlay}>
+                {collection.attributes.title}
+            </div>
+        </div>)}
+
+        {viewCollection && <>
+            <div style={{ position: 'relative' }}>
+                <div onClick={() => setViewCollection(false)} style={{ position: 'absolute', zIndex: '100', top: '0', right: '0' }}>
+                    <IoCloseSharp size={30} className={styles.arrowIcon} />
+                </div>
+
+                <ImageGallery
+                    ref={galleryRef}
+                    items={images2}
+                    showThumbnails={true} // Hides thumbnails below the images
+                    showPlayButton={true} // Hide the play button
+                    showFullscreenButton={true} // Show the fullscreen button
+                    useBrowserFullscreen={true} // Use the browser's native fullscreen API
+                    showBullets={true} // Show bullets (pagination dots)
+                    slideDuration={600} // Duration of slide transition in milliseconds
+                    autoPlay={true} // Enable autoplay
+                    slideInterval={3000} // Interval between slides (3 seconds)
+                />
+            </div>
+        </>}
+
     </div>;
 };
 

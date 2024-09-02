@@ -1,39 +1,81 @@
 .links {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-  }
-  
-  .links ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .links li {
-    margin: 0 10px;
-  }
-  
-  .navLink {
-    text-decoration: none;
-    text-underline-offset: 15px;
-    color: whitesmoke;
-    font-size: 2rem;
-  }
-  
-  .navLink:hover {
-    text-decoration: underline;
-    color: burlywood;
-  }
-  
-  .selected {
-    color: burlywood;
-  }
-  
-  @media (max-width: 767px) {
-    .links {
+  display: flex;
+  width: 70%;
+}
+
+.links ul {
+  justify-content: space-between;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.links li {
+  margin: 0 10px;
+}
+
+.logoDiv {
+  margin-right: 10%;
+  margin-left: 3%;
+  cursor: pointer
+}
+
+.navLink {
+  text-decoration: none;
+  /* text-underline-offset: 15px; */
+  color: black;
+  font-size: 2rem;
+  position: relative;
+}
+
+.navLink:hover,
+.navLink.selected {
+  color: transparent;
+  background-clip: content-box;
+  background: -webkit-linear-gradient(left, #0ca2e0 32%, #25dde4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  /* Start position below the text */
+  width: 100%;
+  height: 0;
+  /* Initial height of the underline */
+  background: -webkit-linear-gradient(left, #0ca2e0 32%, #25dde4 100%);
+  transition: bottom 0.2s ease-out, height 0.2s ease-out;
+  /* Smooth transition for bottom and height */
+  pointer-events: none;
+  /* Ensure the pseudo-element does not interfere with hover */
+}
+
+.navLink:hover::after,
+.navLink.selected::after {
+  bottom: 0;
+  /* Move underline to text level */
+  height: 2px;
+  /* Underline thickness */
+}
+
+.navLink:not(:hover):not(.selected)::after {
+  bottom: -10px;
+  /* Move underline back below the text */
+  height: 0;
+  /* Hide the underline */
+}
+
+@media (max-width: 900px) {
+  .links {
       display: none;
-    }
   }
-  
+
+  .logoDiv {
+      margin: 0;
+  }
+}
