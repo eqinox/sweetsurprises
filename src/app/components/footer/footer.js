@@ -35,7 +35,7 @@ const Footer = () => {
 
             <div className={styles.footerCol}>
                 <h3> <MdOutlineMailOutline /> Последвайте ни</h3>
-                <p style={{textAlign: 'center'}} onClick={() => goToInstagramPage()}>
+                <p onClick={() => goToInstagramPage()}>
                     <FaInstagram cursor="pointer" size={'40px'} />
                 </p>
             </div>
