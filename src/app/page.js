@@ -21,7 +21,7 @@ export default function Home() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axiosInstance.get(`/api/sliders/1?populate=*`);
+        const response = await axiosInstance.get(`/api/gallery-studios/1?populate=*`);
         setImages(response.data.data.attributes.images.data);
 
       } catch (err) {

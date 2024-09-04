@@ -20,7 +20,7 @@ const Gallery = () => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const response = await axiosInstance.get(`/api/galleries?populate=*`);
+                const response = await axiosInstance.get(`/api/gallery-studios?populate=*`);
                 setImages(response.data.data);
 
             } catch (err) {
