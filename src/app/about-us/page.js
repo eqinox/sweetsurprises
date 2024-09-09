@@ -31,25 +31,25 @@ const AboutUs = () => {
             <div className={styles.smallImageGallery}>
                 <PhotoProvider>
                     <div >
-                        <PhotoView src="/temp/studio1.jpeg">
+                        <PhotoView src="/temp/welcome/1.jpeg">
                             <Image
-                                src="/temp/studio1.jpeg"
+                                src="/temp/welcome/1.jpeg"
                                 alt="test"
                                 width={200}
                                 height={150}
                             />
                         </PhotoView> 
-                        <PhotoView src="/temp/studio2.jpeg">
+                        <PhotoView src="/temp/welcome/2.jpg">
                             <Image
-                                src="/temp/studio2.jpeg"
+                                src="/temp/welcome/2.jpg"
                                 alt="test"
                                 width={200}
                                 height={150}
                             />
                         </PhotoView>
-                        <PhotoView src="/temp/studio3.jpeg">
+                        <PhotoView src="/temp/welcome/3.jpeg">
                             <Image
-                                src="/temp/studio3.jpeg"
+                                src="/temp/welcome/3.jpeg"
                                 alt="test"
                                 width={200}
                                 height={150}
@@ -75,25 +75,25 @@ const AboutUs = () => {
             <div className={styles.smallImageGallery}>
                 <PhotoProvider>
                     <div>
-                        <PhotoView src="/temp/studio4.jpeg">
+                        <PhotoView src="/temp/services/1.jpeg">
                             <Image
-                                src="/temp/studio4.jpeg"
+                                src="/temp/services/1.jpeg"
                                 alt="test"
                                 width={200}
                                 height={150}
                             />
                         </PhotoView>
-                        <PhotoView src="/temp/studio5.jpeg">
+                        <PhotoView src="/temp/services/2.jpg">
                             <Image
-                                src="/temp/studio5.jpeg"
+                                src="/temp/services/2.jpg"
                                 alt="test"
                                 width={200}
                                 height={150}
                             />
                         </PhotoView>
-                        <PhotoView src="/temp/studio6.jpeg">
+                        <PhotoView src="/temp/services/3.jpg">
                             <Image
-                                src="/temp/studio6.jpeg"
+                                src="/temp/services/3.jpg"
                                 alt="test"
                                 width={200}
                                 height={150}
@@ -120,17 +120,17 @@ const AboutUs = () => {
             <div className={styles.smallImageGallery}>
                 <PhotoProvider>
                     <div>
-                        <PhotoView src="/temp/studio7.jpeg">
+                        <PhotoView src="/temp/whyus/1.jpg">
                             <Image
-                                src="/temp/studio7.jpeg"
+                                src="/temp/whyus/1.jpg"
                                 alt="test"
                                 width={200}
                                 height={150}
                             />
                         </PhotoView>
-                        <PhotoView src="/temp/studio8.jpeg">
+                        <PhotoView src="/temp/whyus/2.jpeg">
                             <Image
-                                src="/temp/studio8.jpeg"
+                                src="/temp/whyus/2.jpeg"
                                 alt="test"
                                 width={200}
                                 height={150}
@@ -155,43 +155,17 @@ const AboutUs = () => {
             <div className={styles.smallImageGallery}>
                 <PhotoProvider>
                     <div>
-                        <PhotoView src="/temp/studio9.jpeg">
+                        <PhotoView src="/temp/we're-waiting/1.jpeg">
                             <Image
-                                src="/temp/studio9.jpeg"
+                                src="/temp/we're-waiting/1.jpeg"
                                 alt="test"
                                 width={200}
                                 height={150}
                             />
                         </PhotoView>
-                        <PhotoView src="/temp/things1.jpg">
+                        <PhotoView src="/temp/we're-waiting/2.jpeg">
                             <Image
-                                src="/temp/things1.jpg"
-                                alt="test"
-                                width={200}
-                                height={150}
-                            />
-                        </PhotoView>
-                        <PhotoView src="/temp/things2.jpeg">
-                            <Image
-                                src="/temp/things2.jpeg"
-                                alt="test"
-                                width={200}
-                                height={150}
-                            />
-                        </PhotoView>
-                        
-                        <PhotoView src="/temp/things3.jpeg">
-                            <Image
-                                src="/temp/things3.jpeg"
-                                alt="test"
-                                width={200}
-                                height={150}
-                            />
-                        </PhotoView>
-                        
-                        <PhotoView src="/temp/things2.jpg">
-                            <Image
-                                src="/temp/things2.jpg"
+                                src="/temp/we're-waiting/2.jpeg"
                                 alt="test"
                                 width={200}
                                 height={150}
