@@ -20,8 +20,6 @@ export default async function RootLayout({ children }) {
           flexDirection: 'column',
           color: 'whitesmoke',
           fontSize: '1.5rem'
-          // display: 'grid',
-          // gridTemplateRows: '1fr auto',
         }}
       >
           <Header />

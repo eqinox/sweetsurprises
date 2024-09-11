@@ -21,15 +21,45 @@ const Footer = () => {
             </div>
 
             <div className={styles.footerCol}>
-                <h3> <BsTelephoneFill /> Телефон</h3>
-                <p>0888 88 88 88</p>
-                <p>Ирина Папазова</p>
+                <h3 > <BsTelephoneFill /> Апаратни процедури за тяло и солариум</h3>
+                <p>
+                    <a href='tel:+359877717006' style={{ textDecoration: 'none', color: 'inherit' }}>
+                        0877 71 70 06
+                    </a> -
+                    Рени Папазова
+                </p>
+                <p>
+                    <a href='tel:+359877894656' style={{ textDecoration: 'none', color: 'inherit' }}>
+                        0877 89 46 56
+                    </a> -
+                    Антоанета Младенова
+                </p>
+            </div>
+
+            <div className={styles.footerCol}>
+                <h3> <BsTelephoneFill /> Масажист - терапевт</h3>
+                <p>
+                    <a href='tel:+359877097579' style={{ textDecoration: 'none', color: 'inherit' }}>
+                        0877 09 75 79
+                    </a> -
+                    Симеон Иванов
+                </p>
+            </div>
+
+            <div className={styles.footerCol}>
+                <h3> <BsTelephoneFill /> Маникюр и педикюр</h3>
+                <p>
+                    <a href='tel:+359879272207' style={{ textDecoration: 'none', color: 'inherit' }}>
+                        0879 27 22 07
+                    </a> -
+                    Добринка Симова
+                </p>
             </div>
 
             <div className={styles.footerCol}>
                 <h3> <MdOutlineEmail /> Email</h3>
                 <p>
-                    <a href="mailto:sweetsurprises0810@gmail.com">sweetsurprises0810@gmail.com</a>
+                    <a href="mailto:sweetsurprises@abv.bg" style={{ color: 'inherit' }}>sweetsurprises@abv.bg</a>
                 </p>
             </div>
 
