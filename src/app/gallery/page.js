@@ -4,17 +4,16 @@ import { IoCloseSharp } from "react-icons/io5";
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Image from 'next/image';
+import ReactPlayer from "react-player";
+import { sortBy } from "lodash";
 
 import { imageUrlBase } from "../../utils/helper";
 import axiosInstance from "../../utils/axios-instance";
 import styles from './page.module.css';
-import ReactPlayer from "react-player";
-import { sortBy } from "lodash";
 
 const Gallery = () => {
     const [images, setImages] = useState([]);
     const [videos, setVideos] = useState([]);
-    // const [imagesAndVideos, setImagesAndVideos] = useState([]);
     const [imagesInCollection, setImagesInCollection] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -124,12 +123,13 @@ const Gallery = () => {
         >
             {!viewCollection && imagesAndVideos.length > 0 && imagesAndVideos.map((collection) => {
                 if (collection.type === 'image') {
-                    return <div style={{ display: 'flex', flexDirection: 'column', margin: '20px' }}>
+                    return <div
+                        key={collection.index}
+                        style={{ display: 'flex', flexDirection: 'column', margin: '20px' }}
+                    >
                         <div
-                            key={collection.index}
                             className={styles.gallery}
-                            onClick={() => openGalleryInSliderMode(collection)}
-                        >
+                            onClick={() => openGalleryInSliderMode(collection)}>
                             <Image
                                 alt={`${collection.title}`}
                                 src={imageUrlBase + collection.displayImage.data.attributes.url}
@@ -143,7 +143,6 @@ const Gallery = () => {
                             <div>
                                 {collection.description && collection.description}
                             </div>
-                            {console.log('asd', collection.description)}
                         </div>
                         {collection.description && collection.description}
                     </div>
