@@ -8,9 +8,13 @@ import Image from 'next/image';
 import { imageUrlBase } from "../../utils/helper";
 import axiosInstance from "../../utils/axios-instance";
 import styles from './page.module.css';
+import ReactPlayer from "react-player";
+import { sortBy } from "lodash";
 
 const Gallery = () => {
     const [images, setImages] = useState([]);
+    const [videos, setVideos] = useState([]);
+    // const [imagesAndVideos, setImagesAndVideos] = useState([]);
     const [imagesInCollection, setImagesInCollection] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,18 +24,27 @@ const Gallery = () => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const response = await axiosInstance.get(`/api/galleries?populate=*`);
+                const response = await axiosInstance.get(`/api/images?populate=*`);
                 setImages(response.data.data);
 
             } catch (err) {
-                // Handle any errors that occur during the fetch                
-                setError(() => err);
+                setError(() => err); // set the error this way to avoid eslint warnings
             } finally {
-                // Set loading to false once the fetch is complete
+                setLoading(false);
+            }
+        }
+        const fetchVideos = async () => {
+            try {
+                const response = await axiosInstance.get(`/api/videos?populate=*`);
+                setVideos(response.data.data);
+            } catch (err) {
+                setError(() => err); // set the error this way to avoid eslint warnings
+            } finally {
                 setLoading(false);
             }
         }
         fetchImages();
+        fetchVideos();
 
         const handleKeyDown = (event) => {
             if (event.key === 'ArrowRight') {
@@ -66,7 +79,7 @@ const Gallery = () => {
     }, [viewCollection]);
 
     const openGalleryInSliderMode = (item) => {
-        const images = item.attributes.images.data.map((image) => image);
+        const images = item.images.data.map((image) => image);
         setViewCollection(true);
         setImagesInCollection(images);
     }
@@ -81,30 +94,76 @@ const Gallery = () => {
         return <div>Error: {error.message}</div>;
     }
 
-    const images2 = imagesInCollection.map((image) => ({
+    const imagesForImageGallery = imagesInCollection.map((image) => ({
         original: imageUrlBase + image.attributes.url,
         thumbnail: imageUrlBase + image.attributes.formats.thumbnail.url,
     }));
+
+    let imagesAndVideos = [];
+    images.forEach((image) => {
+        imagesAndVideos.push({
+            type: 'image',
+            ...image.attributes
+        })
+    })
+    videos.forEach((video) => {
+        imagesAndVideos.push({
+            type: 'video',
+            ...video.attributes
+        })
+    })
+
+    imagesAndVideos = sortBy(imagesAndVideos, item => item.index)
 
     return <div style={{ width: '100%' }} >
         {!viewCollection && <h1 style={{ textAlign: 'center' }}>Галерия</h1>}
 
 
-        {!viewCollection && images.length && images.map((collection) => <div
-            key={collection.id}
-            className={styles.gallery}
-            onClick={() => openGalleryInSliderMode(collection)}
+        <div
+            className={styles.videosAndImagesContainer}
         >
-            <Image
-                alt={`${collection.attributes.title}`}
-                src={imageUrlBase + collection.attributes.displayImage.data.attributes.url}
-                height={240}
-                width={320}
-            />
-            <div className={styles.overlay}>
-                {collection.attributes.title}
-            </div>
-        </div>)}
+            {!viewCollection && imagesAndVideos.length > 0 && imagesAndVideos.map((collection) => {
+                if (collection.type === 'image') {
+                    return <div style={{ display: 'flex', flexDirection: 'column', margin: '20px' }}>
+                        <div
+                            key={collection.index}
+                            className={styles.gallery}
+                            onClick={() => openGalleryInSliderMode(collection)}
+                        >
+                            <Image
+                                alt={`${collection.title}`}
+                                src={imageUrlBase + collection.displayImage.data.attributes.url}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+
+                            <div className={styles.overlay}>
+                                {collection.title}
+                            </div>
+                            <div>
+                                {collection.description && collection.description}
+                            </div>
+                            {console.log('asd', collection.description)}
+                        </div>
+                        {collection.description && collection.description}
+                    </div>
+
+                } else if (collection.type === 'video') {
+                    return <div key={collection.index} className={styles.videoContainer}>
+                        <ReactPlayer height="90%" width="100%" url={imageUrlBase + collection.video.data.attributes.url} controls />
+                        {collection.description && collection.description}
+                    </div>
+                }
+            }
+            )}
+        </div>
+
+
+        {/* {!viewCollection && videos.length && videos.map((video, index) => <div key={video.id} className={styles.gallery}>
+            <h2>{video.attributes.title} {video.id}</h2>
+            {console.log('imageUrlBase + video.attributes.video.data.attributes.url', imageUrlBase + video.attributes.video.data.attributes.url)}
+            <ReactPlayer url={imageUrlBase + video.attributes.video.data.attributes.url} controls />
+        </div>)} */}
 
         {viewCollection && <>
             <div style={{ position: 'relative' }}>
@@ -114,7 +173,7 @@ const Gallery = () => {
 
                 <ImageGallery
                     ref={galleryRef}
-                    items={images2}
+                    items={imagesForImageGallery}
                     showThumbnails={true} // Hides thumbnails below the images
                     showPlayButton={true} // Hide the play button
                     showFullscreenButton={true} // Show the fullscreen button
