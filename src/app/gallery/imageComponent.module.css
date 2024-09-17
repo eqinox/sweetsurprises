@@ -1,11 +1,12 @@
 .mainContainer {
     display: flex;
     flex-direction: column;
-    margin: 0px 20px;
+    margin: 20px 20px;
     flex-wrap: wrap;
     width: 420px;
     height: auto;
     position: relative;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .imageContainer {
