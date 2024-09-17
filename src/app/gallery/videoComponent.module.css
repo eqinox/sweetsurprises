@@ -1,0 +1,12 @@
+.videoContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    margin: 0px 20px;
+    position: relative;
+    width: 420px;
+    height: 340px;
+    height: auto;
+    /* flex: 1; */
+}
+

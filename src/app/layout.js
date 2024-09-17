@@ -15,6 +15,7 @@ export default async function RootLayout({ children }) {
       <body
         style={{
           backgroundImage: `url(/background.jpg)`,
+          height: '100%',
           minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
@@ -23,10 +24,9 @@ export default async function RootLayout({ children }) {
         }}
       >
           <Header />
-          <main style={{ flexGrow: 1 }}>
+          <main style={{ flexGrow: 1}}>
             {children}
           </main>
-
 
           <Footer />
       </body>

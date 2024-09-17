@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import Image from 'next/image';
-import ReactPlayer from "react-player";
 import { sortBy } from "lodash";
 
 import { imageUrlBase } from "../../utils/helper";
 import axiosInstance from "../../utils/axios-instance";
 import styles from './page.module.css';
+import VideoComponent from "./VideoComponent";
+import ImageComponent from "./ImageComponent";
 
 const Gallery = () => {
     const [images, setImages] = useState([]);
@@ -19,6 +19,7 @@ const Gallery = () => {
     const [error, setError] = useState(null);
     const [viewCollection, setViewCollection] = useState(false);
     const galleryRef = useRef(null);
+    const [playingVideoIndex, setPlayingVideoIndex] = useState(null); // Track currently playing video index
 
     useEffect(() => {
         const fetchImages = async () => {
@@ -83,6 +84,10 @@ const Gallery = () => {
         setImagesInCollection(images);
     }
 
+    const handlePlay = (index) => {
+        setPlayingVideoIndex(index); // Set the index of the video being played
+    };
+
     if (loading) {
         // Render loading state
         return <div>Loading...</div>;
@@ -112,62 +117,35 @@ const Gallery = () => {
         })
     })
 
-    imagesAndVideos = sortBy(imagesAndVideos, item => item.index)
+    imagesAndVideos = sortBy(imagesAndVideos, item => item.index);
 
     return <div style={{ width: '100%' }} >
         {!viewCollection && <h1 style={{ textAlign: 'center' }}>Галерия</h1>}
 
 
-        <div
-            className={styles.videosAndImagesContainer}
-        >
+        <div className={styles.videosAndImagesContainer}>
             {!viewCollection && imagesAndVideos.length > 0 && imagesAndVideos.map((collection) => {
                 if (collection.type === 'image') {
-                    return <div
-                        key={collection.index}
-                        style={{ display: 'flex', flexDirection: 'column', margin: '20px' }}
-                    >
-                        <div
-                            className={styles.gallery}
-                            onClick={() => openGalleryInSliderMode(collection)}>
-                            <Image
-                                alt={`${collection.title}`}
-                                src={imageUrlBase + collection.displayImage.data.attributes.url}
-                                fill
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-
-                            <div className={styles.overlay}>
-                                {collection.title}
-                            </div>
-                            <div>
-                                {collection.description && collection.description}
-                            </div>
-                        </div>
-                        {collection.description && collection.description}
-                    </div>
-
+                    return <ImageComponent key={collection.index} collection={collection} handleOpenGalleryInSliderMode={openGalleryInSliderMode} />
                 } else if (collection.type === 'video') {
-                    return <div key={collection.index} className={styles.videoContainer}>
-                        <ReactPlayer height="90%" width="100%" url={imageUrlBase + collection.video.data.attributes.url} controls />
-                        {collection.description && collection.description}
-                    </div>
+                    return <VideoComponent
+                        key={collection.index}
+                        collection={collection}
+                        isPlaying={playingVideoIndex === collection.index} // Only play if this is the active video
+                        onPlay={handlePlay} // Set the active video when it starts playing
+                    />
                 }
             }
             )}
         </div>
 
-
-        {/* {!viewCollection && videos.length && videos.map((video, index) => <div key={video.id} className={styles.gallery}>
-            <h2>{video.attributes.title} {video.id}</h2>
-            {console.log('imageUrlBase + video.attributes.video.data.attributes.url', imageUrlBase + video.attributes.video.data.attributes.url)}
-            <ReactPlayer url={imageUrlBase + video.attributes.video.data.attributes.url} controls />
-        </div>)} */}
-
         {viewCollection && <>
             <div style={{ position: 'relative' }}>
-                <div onClick={() => setViewCollection(false)} style={{ position: 'absolute', zIndex: '100', top: '0', right: '0' }}>
-                    <IoCloseSharp size={30} className={styles.arrowIcon} />
+                <div onClick={() => {
+                    setPlayingVideoIndex(null);
+                    setViewCollection(false)
+                }} style={{ position: 'absolute', zIndex: '100', top: '0', right: '0' }}>
+                    <IoCloseSharp size={30} color="black" className={styles.arrowIcon} />
                 </div>
 
                 <ImageGallery
