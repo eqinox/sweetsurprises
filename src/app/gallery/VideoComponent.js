@@ -1,12 +1,17 @@
 import { imageUrlBase } from '@/utils/helper';
 import ReactPlayer from 'react-player';
 import { useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import styles from './videoComponent.module.css';
 import common from './page.module.css';
 
 function VideoComponent({ collection, isPlaying, onPlay }) {
     const [showFullDescription, setShowFullDescription] = useState(false);
+    const { ref, inView } = useInView({
+        triggerOnce: true, // Only load the video when it comes into view the first time
+        threshold: 0.5, // Trigger when 50% of the video is visible
+    });
 
     const handleToggleDescription = () => {
         setShowFullDescription((prevState) => !prevState);
@@ -17,15 +22,16 @@ function VideoComponent({ collection, isPlaying, onPlay }) {
         : '';
 
     return (
-        <div key={collection.index} className={styles.videoContainer}>
-            <ReactPlayer
+        <div ref={ref} key={collection.index} className={styles.videoContainer}>
+            {inView && <ReactPlayer
                 width={420}
                 height={340}
                 url={imageUrlBase + collection.video.data.attributes.url}
                 playing={isPlaying} /* Control whether this video is playing */
                 controls
                 onPlay={() => onPlay(collection.index)} /* Notify parent component when this video is played */
-            />
+            />}
+
             {collection.description && (
                 <div style={{ display: 'block' }}>
                     <p className={common.p}>
