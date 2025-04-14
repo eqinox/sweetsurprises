@@ -16,7 +16,6 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { bookingSchema } from "@/validation/bookingSchema";
-import { format, isBefore, startOfDay } from "date-fns";
 import {
   Select,
   SelectContent,
@@ -196,7 +195,11 @@ export default function Step1({ onNext }: { onNext: () => void }) {
                       className="w-full justify-start text-left font-normal hover:bg-transparent bg-inherit border-pink-900"
                     >
                       {field.value
-                        ? format(field.value, "PPP")
+                        ? field.value.toLocaleDateString("bg-BG", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          })
                         : "Изберете дата"}
                     </Button>
                   </PopoverTrigger>
@@ -205,9 +208,15 @@ export default function Step1({ onNext }: { onNext: () => void }) {
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      disabled={(day) =>
-                        isBefore(startOfDay(day), startOfDay(new Date()))
-                      }
+                      disabled={(day: Date) => {
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+
+                        const selectedDay = new Date(day);
+                        selectedDay.setHours(0, 0, 0, 0);
+
+                        return selectedDay < today;
+                      }}
                       className="bg-pink-200"
                       initialFocus
                     />
