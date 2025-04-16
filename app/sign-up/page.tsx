@@ -12,7 +12,7 @@ import Link from "next/link";
 import CredentialsSignUpForm from "./credentials-signup-form";
 
 export const metadata: Metadata = {
-  title: "Вход",
+  title: "Регистрация",
 };
 
 const SignUpPage = () => {

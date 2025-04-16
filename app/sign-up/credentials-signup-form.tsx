@@ -17,9 +17,11 @@ import { registerUser } from "@/actions/user-actions";
 import { registerUserSchema } from "@/validation/registerUser";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 
 const CredentialsSignUpForm = () => {
   type FormValues = z.infer<typeof registerUserSchema>;
+  const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const form = useForm<FormValues>({
@@ -83,15 +85,51 @@ const CredentialsSignUpForm = () => {
         <FormField
           control={form.control}
           name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Телефон</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Телефон</FormLabel>
+                <FormControl>
+                  <div className="flex">
+                    <span className="bg-gray-300 border border-r-0 border-input px-2 pt-2 rounded-l-md text-muted-foreground text-sm select-none">
+                      +359
+                    </span>
+                    <Input
+                      {...field}
+                      ref={inputRef}
+                      type="tel"
+                      className="rounded-l-none"
+                      value={(field.value || "").replace(/^\+?3590?/, "")} // Strip +359 and leading 0 from value
+                      onChange={(e) => {
+                        let raw = e.target.value;
+
+                        // Remove non-digit characters
+                        raw = raw.replace(/\D/g, "");
+
+                        // Remove leading zero if present
+                        if (raw.startsWith("0")) {
+                          raw = raw.slice(1);
+                        }
+
+                        // Final value stored in form: +359 + user input
+                        field.onChange(`+359${raw}`);
+                      }}
+                      onKeyDown={(e) => {
+                        // Prevent backspacing into the +359 prefix
+                        if (
+                          e.key === "Backspace" &&
+                          inputRef.current?.selectionStart === 0
+                        ) {
+                          e.preventDefault();
+                        }
+                      }}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
