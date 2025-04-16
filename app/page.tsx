@@ -54,7 +54,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="md:hidden flex pt-24">
+        <div className="md:hidden flex min-h-screen items-center justify-center">
           <ScrollArea className="w-full whitespace-wrap rounded-md border border-pink-200">
             <div className="flex w-max space-x-4 p-4">
               {contacts.map((item, index) => (
