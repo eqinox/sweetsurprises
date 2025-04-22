@@ -4,6 +4,7 @@ import Navbar from "../components/navbar";
 import { AuthProvider } from "@/context/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { ServiceProvider } from "@/context/service";
+import BackgroundWrapper from "./background-wrapper"; // <-- import it
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,11 +18,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body className="antialiased overflow-x-hidden">
         <ServiceProvider>
           <AuthProvider>
             <Navbar />
-            <div>{children}</div>
+            <BackgroundWrapper>
+              {" "}
+              {/* <-- wrap your children */}
+              {children}
+            </BackgroundWrapper>
             <Toaster richColors />
           </AuthProvider>
         </ServiceProvider>

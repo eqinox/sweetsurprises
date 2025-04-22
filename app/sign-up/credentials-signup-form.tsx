@@ -1,39 +1,22 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { registerUser } from "@/actions/user-actions";
 import { registerUserSchema } from "@/validation/registerUser";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useState } from "react";
+import RegisterStep1 from "./form/register-step1";
+import RegisterStep2 from "./form/register-step2";
+import { useRegisterMultiStepForm } from "./form/register-context";
 
 const CredentialsSignUpForm = () => {
-  type FormValues = z.infer<typeof registerUserSchema>;
-  const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
+  const { formData, resetForm } = useRegisterMultiStepForm();
+  const [step, setStep] = useState(1);
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(registerUserSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      passwordConfirm: "",
-      phone: "",
-      name: "",
-    },
-  });
+  const next = () => setStep((prev) => prev + 1);
+  const back = () => setStep((prev) => prev - 1);
+
+  const router = useRouter();
 
   const handleSubmit = async (data: z.infer<typeof registerUserSchema>) => {
     const response = await registerUser(data);
@@ -42,132 +25,26 @@ const CredentialsSignUpForm = () => {
       toast.error("Неуспешна регистрация", {
         description: response.message,
       });
+      setStep(1);
+      resetForm();
       return;
+    } else {
+      toast.success("Успешна регистрация", {
+        description: "Моля влезте в своя профил",
+      });
+      router.push("/sign-in");
+      resetForm();
     }
-
-    toast.success("Успешна регистрация", {
-      description: "Моля влезте в своя профил",
-    });
-    router.push("/sign-in");
   };
 
+  if (step === 3) {
+    handleSubmit(formData);
+  }
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Име</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Имейл</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>Телефон</FormLabel>
-                <FormControl>
-                  <div className="flex">
-                    <span className="bg-gray-300 border border-r-0 border-input px-2 pt-2 rounded-l-md text-muted-foreground text-sm select-none">
-                      +359
-                    </span>
-                    <Input
-                      {...field}
-                      ref={inputRef}
-                      type="tel"
-                      className="rounded-l-none"
-                      value={(field.value || "").replace(/^\+?3590?/, "")} // Strip +359 and leading 0 from value
-                      onChange={(e) => {
-                        let raw = e.target.value;
-
-                        // Remove non-digit characters
-                        raw = raw.replace(/\D/g, "");
-
-                        // Remove leading zero if present
-                        if (raw.startsWith("0")) {
-                          raw = raw.slice(1);
-                        }
-
-                        // Final value stored in form: +359 + user input
-                        field.onChange(`+359${raw}`);
-                      }}
-                      onKeyDown={(e) => {
-                        // Prevent backspacing into the +359 prefix
-                        if (
-                          e.key === "Backspace" &&
-                          inputRef.current?.selectionStart === 0
-                        ) {
-                          e.preventDefault();
-                        }
-                      }}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            );
-          }}
-        />
-
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Парола</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="passwordConfirm"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Потвърди парола</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit" className="w-full cursor-pointer">
-          {form.formState.isSubmitting ? "Регистриране..." : "Регистрация"}{" "}
-        </Button>
-        <div className="text-center">
-          Вече имате профил? <Link href="/sign-in">Вход</Link>
-        </div>
-      </form>
-    </Form>
+    <div>
+      {step === 1 && <RegisterStep1 onNext={next} />}
+      {step === 2 && <RegisterStep2 onNext={next} onBack={back} />}
+    </div>
   );
 };
 

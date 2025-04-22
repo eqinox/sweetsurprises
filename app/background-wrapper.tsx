@@ -1,0 +1,31 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
+const BackgroundWrapper = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname();
+
+  let backgroundImage = "";
+
+  if (pathname === "/sign-in") {
+    backgroundImage = "bg-[url('/studio4.jpeg')]";
+  } else if (pathname === "/sign-up") {
+    backgroundImage = "bg-[url('/studio4.jpeg')]";
+  }
+  // You can add more cases:
+  // else if (pathname === "/somepage") {
+  //   backgroundImage = "bg-[url('/other-background.jpg')]";
+  // }
+
+  return (
+    <div
+      className={`w-full min-h-screen bg-cover bg-center bg-fixed ${backgroundImage}`}
+    >
+      {/* Optional dark overlay */}
+      <div className="absolute inset-0 bg-black/50 z-0" />
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
+};
+
+export default BackgroundWrapper;
