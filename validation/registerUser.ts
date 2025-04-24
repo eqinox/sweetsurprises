@@ -10,31 +10,32 @@ export const passwordValidation = z.string().refine(
   }
 );
 
-// Regex for E.164 phone number (e.g., +359888123456)
-const phoneRegex = /^\+[1-9]\d{1,14}$/;
+export const addPasswordMatchValidation = <T extends z.ZodTypeAny>(schema: T) =>
+  schema.superRefine((data, ctx) => {
+    if (data.password !== data.passwordConfirm) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Паролите не съвпадат",
+        path: ["passwordConfirm"],
+      });
+    }
+  });
 
 export const registerUserBaseSchema = z.object({
   email: z.string().email("Невалиден Имейл"),
   name: z.string().min(2, "Името трябва да съдържа поне 2 символа"),
-  password: passwordValidation,
+  password: z.string().refine((val) => /\d{6,}/.test(val), {
+    message: "Паролата трябва да съдържа поне 6 цифри",
+  }),
   phone: z
     .string()
     .regex(
-      phoneRegex,
-      "Телефонът трябва да започва с '+' и да съдържа само цифри (напр. +359888123456)"
+      /^\+[1-9]\d{1,14}$/,
+      "Телефонът трябва да започва с '+' и да съдържа само цифри"
     ),
   passwordConfirm: z.string(),
 });
 
-// Full schema with password confirmation check
-export const registerUserSchema = registerUserBaseSchema.superRefine(
-  (data, ctx) => {
-    if (data.password !== data.passwordConfirm) {
-      ctx.addIssue({
-        message: "Паролите не съвпадат",
-        path: ["passwordConfirm"],
-        code: "custom",
-      });
-    }
-  }
+export const registerUserSchema = addPasswordMatchValidation(
+  registerUserBaseSchema
 );

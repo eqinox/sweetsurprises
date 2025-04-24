@@ -10,7 +10,7 @@ import RegisterStep2 from "./form/register-step2";
 import { useRegisterMultiStepForm } from "./form/register-context";
 
 const CredentialsSignUpForm = () => {
-  const { formData, resetForm } = useRegisterMultiStepForm();
+  const { resetForm } = useRegisterMultiStepForm();
   const [step, setStep] = useState(1);
 
   const next = () => setStep((prev) => prev + 1);
@@ -37,13 +37,10 @@ const CredentialsSignUpForm = () => {
     }
   };
 
-  if (step === 3) {
-    handleSubmit(formData);
-  }
   return (
     <div>
       {step === 1 && <RegisterStep1 onNext={next} />}
-      {step === 2 && <RegisterStep2 onNext={next} onBack={back} />}
+      {step === 2 && <RegisterStep2 onSubmit={handleSubmit} onBack={back} />}
     </div>
   );
 };

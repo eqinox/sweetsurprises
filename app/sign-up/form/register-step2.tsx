@@ -15,7 +15,10 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { useRegisterMultiStepForm } from "./register-context";
-import { registerUserBaseSchema } from "@/validation/registerUser";
+import {
+  registerUserBaseSchema,
+  registerUserSchema,
+} from "@/validation/registerUser";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRef } from "react";
@@ -28,10 +31,10 @@ const step1Schema = registerUserBaseSchema.pick({
 type Step1Data = z.infer<typeof step1Schema>;
 
 export default function RegisterStep2({
-  onNext,
+  onSubmit,
   onBack,
 }: {
-  onNext: () => void;
+  onSubmit: (data: z.infer<typeof registerUserSchema>) => void;
   onBack: () => void;
 }) {
   const { formData, setFormData } = useRegisterMultiStepForm();
@@ -45,14 +48,21 @@ export default function RegisterStep2({
     },
   });
 
-  const onSubmit = (values: Step1Data) => {
+  const handleSubmit = async (values: Step1Data) => {
+    const object: z.infer<typeof registerUserSchema> = {
+      name: values.name,
+      phone: values.phone,
+      email: formData.email,
+      password: formData.password,
+      passwordConfirm: formData.passwordConfirm,
+    };
     setFormData(values); // update context
-    onNext(); // move to next step
+    await onSubmit(object); // wait for the parent onSubmit to finish
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
         <Button
           variant="ghost"
           size="sm"

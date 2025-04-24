@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 const SignUpPage = () => {
   return (
-    <div className="flex items-center justify-center w-full h-[calc(100vh-64px)] pt-16">
+    <div className="flex items-center justify-center w-full h-[calc(100vh-10px)] ">
       <Card className="bg-pink-200/80 w-92">
         <CardHeader className="space-y-4">
           <Link href="/" className="flex justify-center">

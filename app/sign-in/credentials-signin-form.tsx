@@ -11,14 +11,17 @@ import {
 } from "@/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, ControllerRenderProps } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import Link from "next/link";
 import { loginUserSchema } from "@/validation/loginUser";
 import { useAuth } from "@/context/auth";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const CredentialsSignInForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
   type FormValues = z.infer<typeof loginUserSchema>;
   const auth = useAuth();
   const router = useRouter();
@@ -55,11 +58,7 @@ const CredentialsSignInForm = () => {
         <FormField
           control={form.control}
           name="email"
-          render={({
-            field,
-          }: {
-            field: ControllerRenderProps<FormValues, "email">;
-          }) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Имейл</FormLabel>
               <FormControl>
@@ -69,22 +68,39 @@ const CredentialsSignInForm = () => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="password"
-          render={({
-            field,
-          }: {
-            field: ControllerRenderProps<FormValues, "password">;
-          }) => (
-            <FormItem>
-              <FormLabel>Парола</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Парола</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      {...field}
+                      className="pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground cursor-pointer"
+                      tabIndex={-1} // optional: prevents tab focus
+                    >
+                      {showPassword ? (
+                        <EyeOff className="w-5 h-5" />
+                      ) : (
+                        <Eye className="w-5 h-5" />
+                      )}
+                    </button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
 
         <Button type="submit" className="w-full cursor-pointer">
