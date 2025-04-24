@@ -11,6 +11,8 @@ const BackgroundWrapper = ({ children }: { children: React.ReactNode }) => {
     backgroundImage = "bg-[url('/studio4.jpeg')]";
   } else if (pathname === "/sign-up") {
     backgroundImage = "bg-[url('/studio4.jpeg')]";
+  } else if (pathname === "/contacts") {
+    backgroundImage = "bg-[url('/vhod.jpg')]";
   }
   // You can add more cases:
   // else if (pathname === "/somepage") {

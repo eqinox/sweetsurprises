@@ -32,7 +32,7 @@ export const RegisterFormProvider = ({
   });
 
   const setFormData = (data: Partial<FormData>) => {
-    setFormDataState((prev) => ({ ...prev, ...data }));
+    setFormDataState((prev: Partial<FormData>) => ({ ...prev, ...data }));
   };
 
   const resetForm = () => {

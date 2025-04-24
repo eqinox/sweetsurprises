@@ -18,59 +18,30 @@ const ContactsPage = () => {
   return (
     <div className="relative w-full">
       {/* Background Section with Fixed Background */}
-      <div className="w-full h-screen bg-[url('/vhod.jpg')] bg-cover bg-center bg-fixed">
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative hidden z-10 md:flex items-center justify-center min-h-screen flex-col">
-          <div className="text-white text-4xl flex flex-col items-center gap-4">
-            <div className="after:w-full after:left-0 relative px-2 after:absolute after:-bottom-1 after:h-0.5 after:bg-pink-300">
-              Контакти
-            </div>
-
-            {/* Address Section with Copy Functionality */}
-            <div className="items-center flex flex-col mb-4 relative">
-              <LocateIcon />
-              <div className="text-xl cursor-pointer" onClick={handleCopy}>
-                {address}
-              </div>
-
-              {/* Copy Notification */}
-              {copied && (
-                <div className="relative bg-pink-300 text-white text-sm px-2 py-1 rounded-md flex items-center gap-1">
-                  <CheckCircleIcon size={16} />
-                  Копирано!
-                </div>
-              )}
-            </div>
+      <div className="relative  z-10 flex items-center justify-center min-h-screen flex-col">
+        <div className="text-white text-4xl flex flex-col items-center gap-4">
+          <div className="after:w-full after:left-0 relative px-2 after:absolute after:-bottom-1 after:h-0.5 after:bg-pink-300">
+            Контакти
           </div>
 
-          <Map />
-        </div>
-
-        <div className="md:hidden flex pt-24 justify-center flex-col">
-          <div className="text-white text-4xl flex flex-col items-center gap-4">
-            <div className="after:w-full after:left-0 relative px-2 after:absolute after:-bottom-1 after:h-0.5 after:bg-pink-300">
-              Контакти
+          {/* Address Section with Copy Functionality */}
+          <div className="items-center flex flex-col mb-4 relative">
+            <LocateIcon />
+            <div className="text-xl cursor-pointer" onClick={handleCopy}>
+              {address}
             </div>
 
-            {/* Address Section with Copy Functionality */}
-            <div className="items-center flex flex-col mb-4 relative">
-              <LocateIcon />
-              <div className="text-xl cursor-pointer" onClick={handleCopy}>
-                {address}
+            {/* Copy Notification */}
+            {copied && (
+              <div className="relative bg-pink-300 text-white text-sm px-2 py-1 rounded-md flex items-center gap-1">
+                <CheckCircleIcon size={16} />
+                Копирано!
               </div>
-
-              {/* Copy Notification */}
-              {copied && (
-                <div className="relative bg-pink-300 text-white text-sm px-2 py-1 rounded-md flex items-center gap-1 ">
-                  <CheckCircleIcon size={16} />
-                  Копирано!
-                </div>
-              )}
-            </div>
+            )}
           </div>
-          <Map />
         </div>
+
+        <Map />
       </div>
     </div>
   );
