@@ -16,33 +16,30 @@ const ContactsPage = () => {
   };
 
   return (
-    <div className="relative w-full">
-      {/* Background Section with Fixed Background */}
-      <div className="relative  z-10 flex items-center justify-center min-h-screen flex-col">
-        <div className="text-white text-4xl flex flex-col items-center gap-4">
-          <div className="after:w-full after:left-0 relative px-2 after:absolute after:-bottom-1 after:h-0.5 after:bg-pink-300">
-            Контакти
-          </div>
-
-          {/* Address Section with Copy Functionality */}
-          <div className="items-center flex flex-col mb-4 relative">
-            <LocateIcon />
-            <div className="text-xl cursor-pointer" onClick={handleCopy}>
-              {address}
-            </div>
-
-            {/* Copy Notification */}
-            {copied && (
-              <div className="relative bg-pink-300 text-white text-sm px-2 py-1 rounded-md flex items-center gap-1">
-                <CheckCircleIcon size={16} />
-                Копирано!
-              </div>
-            )}
-          </div>
+    <div className="z-10 flex items-center justify-center min-h-screen flex-col">
+      <div className="text-white text-4xl flex flex-col items-center gap-4">
+        <div className="after:w-full after:left-0 relative px-2 after:absolute after:-bottom-1 after:h-0.5 after:bg-pink-300">
+          Контакти
         </div>
 
-        <Map />
+        {/* Address Section with Copy Functionality */}
+        <div className="items-center flex flex-col mb-4 relative">
+          <LocateIcon />
+          <div className="text-xl cursor-pointer" onClick={handleCopy}>
+            {address}
+          </div>
+
+          {/* Copy Notification */}
+          {copied && (
+            <div className="relative bg-pink-300 text-white text-sm px-2 py-1 rounded-md flex items-center gap-1">
+              <CheckCircleIcon size={16} />
+              Копирано!
+            </div>
+          )}
+        </div>
       </div>
+
+      <Map />
     </div>
   );
 };

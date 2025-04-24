@@ -14,14 +14,10 @@ const BackgroundWrapper = ({ children }: { children: React.ReactNode }) => {
   } else if (pathname === "/contacts") {
     backgroundImage = "bg-[url('/vhod.jpg')]";
   }
-  // You can add more cases:
-  // else if (pathname === "/somepage") {
-  //   backgroundImage = "bg-[url('/other-background.jpg')]";
-  // }
 
   return (
     <div
-      className={`w-full min-h-screen bg-cover bg-center bg-fixed ${backgroundImage}`}
+      className={`relative w-full min-h-screen bg-cover bg-center bg-fixed ${backgroundImage}`}
     >
       {/* Optional dark overlay */}
       <div className="absolute inset-0 bg-black/50 z-0" />
