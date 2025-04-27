@@ -35,12 +35,12 @@ export default function Home() {
   return (
     <div className="relative w-full">
       {/* Background Section with Fixed Background */}
-      <div className="w-full h-screen bg-[url('/studio-inner.jpg')] bg-cover bg-center bg-fixed">
+      <div className="w-full h-dvh bg-[url('/studio-inner.jpg')] bg-cover bg-center bg-fixed">
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/50"></div>
 
         {/* Content that scrolls over the fixed background */}
-        <div className="relative hidden z-10 md:flex items-center justify-center min-h-screen">
+        <div className="relative hidden z-10 md:flex items-center justify-center h-dvh">
           {contacts.map((item, index) => (
             <DoubleSidedCard
               key={index}
@@ -54,7 +54,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="md:hidden flex min-h-screen items-center justify-center">
+        <div className="md:hidden flex h-dvh items-center justify-center">
           <ScrollArea className="w-full whitespace-wrap rounded-md border border-pink-200">
             <div className="flex w-max space-x-4 p-4">
               {contacts.map((item, index) => (
