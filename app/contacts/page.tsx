@@ -16,7 +16,7 @@ const ContactsPage = () => {
   };
 
   return (
-    <div className="z-10 flex items-center justify-center h-full flex-col">
+    <div className="z-10 flex items-center justify-center min-h-screen flex-col">
       <div className="text-white text-4xl flex flex-col items-center gap-4">
         <div className="after:w-full after:left-0 relative px-2 after:absolute after:-bottom-1 after:h-0.5 after:bg-pink-300">
           Контакти
