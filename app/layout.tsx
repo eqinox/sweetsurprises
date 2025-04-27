@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "../components/navbar";
+// import Navbar from "../components/navbar";
 import { AuthProvider } from "@/context/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { ServiceProvider } from "@/context/service";
@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="antialiased overflow-x-hidden">
         <ServiceProvider>
           <AuthProvider>
-            <Navbar />
+            {/* <Navbar /> */}
             <BackgroundWrapper>
               {" "}
               {/* <-- wrap your children */}
