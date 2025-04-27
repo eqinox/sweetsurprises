@@ -17,7 +17,7 @@ const BackgroundWrapper = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div
-      className={`relative w-full h-screen bg-cover bg-center ${backgroundImage}`}
+      className={`relative w-full h-dvh bg-cover bg-center ${backgroundImage}`}
     >
       {/* Optional dark overlay */}
       <div className="absolute inset-0 bg-black/50 z-0" />

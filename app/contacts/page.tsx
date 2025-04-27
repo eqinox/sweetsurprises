@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { LocateIcon, CheckCircleIcon } from "lucide-react";
-// import Map from "./map";
+import Map from "./map";
 
 const ContactsPage = () => {
   const [copied, setCopied] = useState(false);
@@ -39,7 +39,7 @@ const ContactsPage = () => {
         </div>
       </div>
 
-      {/* <Map /> */}
+      <Map />
     </div>
   );
 };
