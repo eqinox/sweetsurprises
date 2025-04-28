@@ -19,6 +19,7 @@ import BookingSteps from "../booking-steps";
 import Link from "next/link";
 import { useEffect } from "react";
 import { ArrowBigLeft } from "lucide-react";
+import PhoneInputField from "@/components/PhoneInputField";
 
 const step2Schema = bookingSchema.pick({
   email: true,
@@ -99,15 +100,7 @@ const Step2 = ({
         <FormField
           control={form.control}
           name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Телефон</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => <PhoneInputField field={field} />}
         />
 
         <FormField

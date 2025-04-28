@@ -21,8 +21,8 @@ import {
 } from "@/validation/registerUser";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { useRef } from "react";
 import { ArrowBigLeft } from "lucide-react";
+import PhoneInputField from "@/components/PhoneInputField";
 
 const step1Schema = registerUserBaseSchema.pick({
   name: true,
@@ -38,7 +38,6 @@ export default function RegisterStep2({
   onBack: () => void;
 }) {
   const { formData, setFormData } = useRegisterMultiStepForm();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
@@ -89,51 +88,7 @@ export default function RegisterStep2({
         <FormField
           control={form.control}
           name="phone"
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>Телефон</FormLabel>
-                <FormControl>
-                  <div className="flex">
-                    <span className="bg-gray-300 border border-r-0 border-input px-2 pt-2 rounded-l-md text-muted-foreground text-sm select-none">
-                      +359
-                    </span>
-                    <Input
-                      {...field}
-                      ref={inputRef}
-                      type="tel"
-                      className="rounded-l-none"
-                      value={(field.value || "").replace(/^\+?3590?/, "")} // Strip +359 and leading 0 from value
-                      onChange={(e) => {
-                        let raw = e.target.value;
-
-                        // Remove non-digit characters
-                        raw = raw.replace(/\D/g, "");
-
-                        // Remove leading zero if present
-                        if (raw.startsWith("0")) {
-                          raw = raw.slice(1);
-                        }
-
-                        // Final value stored in form: +359 + user input
-                        field.onChange(`+359${raw}`);
-                      }}
-                      onKeyDown={(e) => {
-                        // Prevent backspacing into the +359 prefix
-                        if (
-                          e.key === "Backspace" &&
-                          inputRef.current?.selectionStart === 0
-                        ) {
-                          e.preventDefault();
-                        }
-                      }}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            );
-          }}
+          render={({ field }) => <PhoneInputField field={field} />}
         />
 
         <Button type="submit" className="w-full cursor-pointer">
