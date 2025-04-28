@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Card,
   CardContent,
@@ -6,13 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import styles from "./double-sided-card.module.css";
 import Image from "next/image";
 import { Phone, Timer } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useService } from "@/context/service";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Props {
   frontTitle: string;
@@ -33,16 +33,32 @@ const DoubleSidedCard: React.FC<Props> = ({
 }) => {
   const { setService } = useService();
   const router = useRouter();
-  const [isFlipped, setIsFlipped] = useState(false); // <- control flipping manually
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth <= 768);
+    }
+  }, []);
 
   const handleCardClick = () => {
-    setIsFlipped(!isFlipped);
+    if (isMobile) {
+      setIsFlipped(true); // Tap card → flip to back
+    }
+  };
+
+  const handleCardContentClick = (e: React.MouseEvent) => {
+    if (isMobile) {
+      e.stopPropagation(); // Prevent also triggering card flip
+      setIsFlipped(false); // Tap inside CardContent → flip back
+    }
   };
 
   return (
     <div
       className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
-      onClick={handleCardClick} // <- listen for clicks anywhere
+      onClick={handleCardClick}
     >
       <div className={styles["card-inner"]}>
         <div className={styles["card-front"]}>
@@ -50,7 +66,7 @@ const DoubleSidedCard: React.FC<Props> = ({
             <CardHeader>
               <CardTitle>{frontTitle}</CardTitle>
             </CardHeader>
-            <CardContent className="relative">
+            <CardContent className="relative" onClick={handleCardContentClick}>
               <Image
                 src={frontImage}
                 alt="front image"
@@ -74,7 +90,7 @@ const DoubleSidedCard: React.FC<Props> = ({
                 <div
                   className="flex flex-row w-full cursor-pointer hover:text-white"
                   onClick={(e) => {
-                    e.stopPropagation(); // prevent flipping when clicking "Резервирай"
+                    e.stopPropagation(); // Don't flip when clicking reserve button
                     setService(service);
                     router.push("/booking");
                   }}
@@ -83,7 +99,7 @@ const DoubleSidedCard: React.FC<Props> = ({
                 </div>
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent onClick={handleCardContentClick}>
               <Image
                 src={backImage}
                 alt="back image"
