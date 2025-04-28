@@ -1,3 +1,5 @@
+"use client";
+
 import { Form } from "@/components/ui/form";
 import { bookingSchema } from "@/validation/bookingSchema";
 import { z } from "zod";
@@ -6,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import BookingSteps from "../booking-steps";
 import { Button } from "@/components/ui/button";
-import { ArrowBigLeft, Check } from "lucide-react";
+import { ArrowBigLeft, Check, Loader } from "lucide-react";
 import { createReservationAndSendMail } from "@/actions/reservation-actions";
 import { useRouter } from "next/navigation";
 
@@ -30,7 +32,7 @@ const Step3 = ({ onBack }: { onBack: () => void }) => {
 
   const onSubmit = async (values: Step3Data) => {
     const response = await createReservationAndSendMail(values);
-    console.log("resp", response);
+
     if (!response.error) {
       router.push(`/booking/success?reservationId=${response.reservation.id}`);
     }
@@ -54,6 +56,7 @@ const Step3 = ({ onBack }: { onBack: () => void }) => {
         >
           <ArrowBigLeft /> Предишна стъпка
         </Button>
+
         <div className="bg-inherit rounded-xl p-4 shadow-md text-sm space-y-2 text-gray-800">
           <ul className="space-y-3 text-sm text-gray-700">
             <h3 className="text-lg font-semibold mb-3 text-pink-600">
@@ -99,8 +102,14 @@ const Step3 = ({ onBack }: { onBack: () => void }) => {
           </ul>
         </div>
 
-        <Button type="submit" className="w-full cursor-pointer">
+        <Button
+          type="submit"
+          className="w-full cursor-pointer flex items-center justify-center gap-2"
+        >
           Резервирай
+          {form.formState.isSubmitting && (
+            <Loader className="w-5 h-5 animate-spin" />
+          )}
         </Button>
       </form>
     </Form>

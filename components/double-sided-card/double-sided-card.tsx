@@ -12,6 +12,7 @@ import Image from "next/image";
 import { Phone, Timer } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useService } from "@/context/service";
+import { useState } from "react";
 
 interface Props {
   frontTitle: string;
@@ -32,8 +33,17 @@ const DoubleSidedCard: React.FC<Props> = ({
 }) => {
   const { setService } = useService();
   const router = useRouter();
+  const [isFlipped, setIsFlipped] = useState(false); // <- control flipping manually
+
+  const handleCardClick = () => {
+    setIsFlipped(!isFlipped);
+  };
+
   return (
-    <div className={styles.card}>
+    <div
+      className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
+      onClick={handleCardClick} // <- listen for clicks anywhere
+    >
       <div className={styles["card-inner"]}>
         <div className={styles["card-front"]}>
           <Card className="bg-pink-200 opacity-80 w-56">
@@ -63,7 +73,8 @@ const DoubleSidedCard: React.FC<Props> = ({
                 </div>
                 <div
                   className="flex flex-row w-full cursor-pointer hover:text-white"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation(); // prevent flipping when clicking "Резервирай"
                     setService(service);
                     router.push("/booking");
                   }}
