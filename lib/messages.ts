@@ -10,24 +10,32 @@ export const sendTelegramNotification = async (reservation: Reservation) => {
 
     const message = `📅 Нова резервация от ${reservation.name}\n📱 Телефон: ${reservation.phone}\n💅 Услуга: ${reservation.service}\n🕒 Час: ${reservation.time} на ${formattedDate}`;
 
-    const response = await fetch(
-      `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: process.env.TELEGRAM_CHAT_ID,
-          text: message,
-        }),
-      }
-    );
+    const token = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+
+    console.log("💬 Token:", token);
+    console.log("💬 Chat ID:", chatId);
+
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+      }),
+    });
+
+    const responseBody = await response.text();
+    console.log("🛠 Telegram status:", response.status);
+    console.log("🛠 Telegram response:", responseBody);
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Telegram API error:", response.status, errorText);
-    } else {
-      console.log("✅ Telegram message sent successfully");
+      throw new Error(`Telegram API returned status ${response.status}`);
     }
+
+    console.log("✅ Telegram message sent successfully");
   } catch (error) {
     console.error("❌ Failed to send Telegram notification:", error);
   }
