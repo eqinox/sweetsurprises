@@ -23,8 +23,15 @@ export const sendTelegramNotification = async (reservation: Reservation) => {
 };
 
 // lib/send-telegram.ts
-export const sendTelegramMessageViaApi = async (message: string) => {
+export const sendTelegramMessageViaApi = async (reservation: Reservation) => {
   try {
+    const formattedDate = reservation.date.toLocaleDateString("bg-BG", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+
+    const message = `📅 Нова резервация от ${reservation.name}\n📱 Телефон: ${reservation.phone}\n💅 Услуга: ${reservation.service}\n🕒 Час: ${reservation.time} на ${formattedDate}`;
     const res = await fetch(
       `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
       {

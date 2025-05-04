@@ -55,7 +55,7 @@ export const createReservationAndSendMail = async (data: {
 
     sendBookingReceipt({ reservation: reservation });
 
-    await sendTelegramMessageViaApi(`📅 ... full message ...`);
+    await sendTelegramMessageViaApi(reservation);
     // sendTelegramNotification(reservation);
 
     return { error: false, reservation };
