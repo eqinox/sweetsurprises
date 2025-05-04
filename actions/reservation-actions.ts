@@ -2,7 +2,10 @@
 
 import { sendBookingReceipt } from "@/email";
 import { firestore } from "@/firebase/server";
-import { sendTelegramNotification } from "@/lib/messages";
+import {
+  sendTelegramMessageViaApi,
+  // sendTelegramNotification,
+} from "@/lib/messages";
 import { getErrorMessage } from "@/lib/utils";
 import { Reservation, ReservationStatus } from "@/types/reservation";
 import { bookingSchema } from "@/validation/bookingSchema";
@@ -51,7 +54,9 @@ export const createReservationAndSendMail = async (data: {
     };
 
     sendBookingReceipt({ reservation: reservation });
-    sendTelegramNotification(reservation);
+
+    await sendTelegramMessageViaApi(`📅 ... full message ...`);
+    // sendTelegramNotification(reservation);
 
     return { error: false, reservation };
   } catch (err) {

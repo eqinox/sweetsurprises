@@ -21,3 +21,25 @@ export const sendTelegramNotification = async (reservation: Reservation) => {
     console.error("Unexpected error in sendTelegramNotification:", error);
   }
 };
+
+// lib/send-telegram.ts
+export const sendTelegramMessageViaApi = async (message: string) => {
+  try {
+    const res = await fetch(
+      `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: process.env.TELEGRAM_CHAT_ID,
+          text: message,
+        }),
+      }
+    );
+
+    const body = await res.text();
+    console.log("Telegram API response:", res.status, body);
+  } catch (err) {
+    console.error("Telegram send error:", err);
+  }
+};
