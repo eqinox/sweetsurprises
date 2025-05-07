@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { LocateIcon, CheckCircleIcon } from "lucide-react";
+import { LocateIcon, CheckCircleIcon, Instagram } from "lucide-react";
 import Map from "./map";
 
 const ContactsPage = () => {
@@ -17,6 +17,15 @@ const ContactsPage = () => {
 
   return (
     <div className="z-10 flex items-center justify-center h-dvh flex-col">
+      <div className="text-white mb-6 cursor-pointer">
+        <Instagram
+          size={50}
+          onClick={() => {
+            window.open("https://www.instagram.com/sweetsurprisessart/");
+          }}
+        />
+      </div>
+
       <div className="text-white text-4xl flex flex-col items-center gap-4">
         <div className="after:w-full after:left-0 relative px-2 after:absolute after:-bottom-1 after:h-0.5 after:bg-pink-300">
           Контакти
