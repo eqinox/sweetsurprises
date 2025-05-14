@@ -10,6 +10,9 @@ import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
 export const metadata: Metadata = {
   title: APP_NAME,
   description: APP_DESCRIPTION,
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
